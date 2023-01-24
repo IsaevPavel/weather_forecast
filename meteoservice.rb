@@ -6,7 +6,7 @@ require 'cgi'
 require_relative 'forecast'
 
 choices = Forecast.city.keys
-puts Forecast.city.invert
+
 puts "Погоду для какого города Вы хотите узнать?"
 choices.each_with_index { |name, index| puts "#{index + 1}. #{name}" }
 choice = STDIN.gets.chomp.to_i
