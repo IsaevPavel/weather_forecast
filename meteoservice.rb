@@ -5,7 +5,22 @@ require 'cgi'
 # Подключаем класс MeteoserviceForecast
 require_relative 'forecast'
 
-URL = 'https://www.meteoservice.ru/export/gismeteo/point/34.xml'.freeze
+choices = Forecast.city.keys
+puts Forecast.city.invert
+puts "Погоду для какого города Вы хотите узнать?"
+choices.each_with_index { |name, index| puts "#{index + 1}. #{name}" }
+choice = STDIN.gets.chomp.to_i
+
+until choice.between?(1, choices.size)
+  puts "Введите число от 1 до #{choices.size}"
+  choices.each_with_index do |name, index|
+    puts "#{index + 1}. #{name}"
+  end
+  choice = STDIN.gets.chomp.to_i
+end
+
+request_xml = Forecast.city_xml(choices[choice - 1])
+URL = "https://www.meteoservice.ru/export/gismeteo/point/#{request_xml}.xml"
 
 response = Net::HTTP.get_response(URI.parse(URL))
 doc = REXML::Document.new(response.body)

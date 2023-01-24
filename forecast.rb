@@ -16,7 +16,12 @@ class Forecast
     @cloudiness = params[:cloudiness]
     @max_wind = params[:max_wind]
   end
-
+  def self.city
+    {"Минск"=>"34","Брест"=>"2895","Витебск"=>"2897","Гомель"=>"2900","Гродно"=>"2896","Могилёв"=>"35"}
+  end
+  def self.city_xml(type)
+    city[type]
+  end
   # Метод класса from_xml_node возвращает экземпляр класса, прочитанные из
   # элемента XML-структуры с прогнозом
   def self.from_xml(node)
